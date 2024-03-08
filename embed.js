@@ -6,6 +6,7 @@ window.addEventListener(
       event.source.postMessage({action: 'request'}, event.origin)
     } else if (event.data.action === 'respond') {
       const val = event.data.value
+      console.log(val)
       await google.colab.kernel.invokeFunction('notebook.SetApiKey', [val], {})
     }
   }
