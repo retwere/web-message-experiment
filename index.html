@@ -2,9 +2,7 @@
   <head>
     <title>foo</title>
     <script lang="javascript">
-      document.onload = () => {
-        window.parent.postMessage({content: 'test'})
-      }
+      window.parent.postMessage({content: 'test'})
     </script>
   </head>
   <body>bar</body>
