@@ -4,7 +4,7 @@
     <script lang="javascript">
       window.addEventListener("load", () => {
         const div = document.createElement('div')
-        div.innerHTML = `${JSON.stringify(window.parent)}`
+        div.innerHTML = `parent: ${window.parent.origin}`
         document.body.appendChild(div)
         window.parent.postMessage({content: 'test'})
       })
