@@ -2,10 +2,12 @@
   <head>
     <title>foo</title>
     <script lang="javascript">
-      const div = document.createElement('div')
-      div.innerHTML = `${window.parent}`
-      document.body.appendChild(div)
-      window.parent.postMessage({content: 'test'})
+      window.addEventListener("load", () => {
+        const div = document.createElement('div')
+        div.innerHTML = `${window.parent}`
+        document.body.appendChild(div)
+        window.parent.postMessage({content: 'test'})
+      })
     </script>
   </head>
   <body>bar</body>
