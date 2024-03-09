@@ -6,7 +6,7 @@ window.addEventListener(
     if (event.origin !== ORIGIN) return
     if (event.data.action === 'respond') {
       const val = event.data.value
-      await google.colab.kernel.invokeFunction('notebook.SetApiKey', [val], {})
+      await google.colab.kernel.invokeFunction('pinecone.SetApiKey', [val], {})
     }
   }
 );
