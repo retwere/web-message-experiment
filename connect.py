@@ -3,12 +3,13 @@ from google.colab import output
 
 API_KEY = ''
 
-def GetApiKey():
-  def SetApiKey(val):
-    global API_KEY
-    API_KEY = val
+def SetApiKey(val):
+  global API_KEY
+  API_KEY = val
 
-  SetApiKey('')
+def GetApiKey():
+
+  SetApiKey('s')
 
   output.register_callback('pinecone.SetApiKey', SetApiKey)
   display(Javascript(url='https://web-message-experiment.vercel.app/embed.js'))
