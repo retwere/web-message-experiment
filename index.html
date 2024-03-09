@@ -16,10 +16,6 @@
           event.source.postMessage({action: 'respond', value: 'foobarbaz'}, event.origin)
         }
       })
-
-      window.addEventListener("load", () => {
-        window.parent.postMessage({action: 'ready'}, "*")
-      })
     </script>
   </head>
   <body>bar</body>
