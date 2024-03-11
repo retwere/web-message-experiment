@@ -11,7 +11,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MessageListener setNotebook={setNotebook} />} />
-          <Route path="/confirm" element={<ConfirmPage />} />
+          <Route path="confirm" element={<ConfirmPage />} />
         </Routes>
       </BrowserRouter>
     </NotebookContext.Provider>
