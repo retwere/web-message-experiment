@@ -1,24 +1,27 @@
 import { useEffect } from "react"
-import { Notebook } from "./notebook"
 
-type MessageListenerProps = {
-  setNotebook: (notebook: Notebook) => void
+const createPopupListener = (source: MessageEventSource, origin: string) => (event: MessageEvent) => {
+  if (event.origin !== 'https://web-message-experiment.vercel.app') return
+  if (event.data.action === 'passthrough') {
+    source.postMessage({ ...event.data, action: 'respond'}, {targetOrigin: origin})
+  }
 }
 
-function MessageListener({setNotebook}: MessageListenerProps) {
+const notebookListener = (event: MessageEvent) => {
+  const {source, origin, data} = event
+  if (!origin.startsWith('https://') || !origin.endsWith('-colab.googleusercontent.com')) {
+    return
+  }
+  if (data.action === 'request') {
+    if (!source || !origin) throw new Error('No notebook!')
+    window.addEventListener('message', createPopupListener(source, origin))
+    window.open('confirm', '_blank')
+  }
+}
+
+function MessageListener() {
   useEffect(() => {
-    // listen for the request from colab notebook
-    window.addEventListener("message", (event) => {
-      const {source, origin, data} = event
-      if (!origin.startsWith('https://') || !origin.endsWith('-colab.googleusercontent.com')) {
-        return
-      }
-      if (data.action === 'request') {
-        if (!source || !origin) throw new Error('No notebook!')
-        setNotebook({source, origin})
-        window.open('confirm', '_blank')
-      }
-    })
+    window.addEventListener("message", notebookListener)
   })
   return null;
 }

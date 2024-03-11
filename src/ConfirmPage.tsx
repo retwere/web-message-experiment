@@ -1,17 +1,13 @@
 import { useCallback } from "react"
-import { useNotebook } from "./notebook"
 
 function ConfirmPage() {
-  const notebook = useNotebook()
-
   const onConfirm = useCallback(() => {
-    if (!notebook?.source || !notebook?.origin) throw new Error('No notebook!')
-    notebook.source.postMessage(
-      {action: 'respond', value: 'foobarbaz'},
-      {targetOrigin: notebook.origin}
+    window.parent.postMessage(
+      {action: 'passthrough', value: 'foobarbaz'},
+      {targetOrigin: 'https://web-message-experiment.vercel.app'}
     )
     window.close()
-  }, [notebook])
+  }, [])
 
   const onCancel = useCallback(() => {window.close()}, [])
 
