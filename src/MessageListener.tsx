@@ -1,13 +1,22 @@
 import { useEffect } from "react"
+import { Notebook } from "./notebook"
 
-function MessageListener() {
+type MessageListenerProps = {
+  setNotebook: (notebook: Notebook) => void
+}
+
+function MessageListener({setNotebook}: MessageListenerProps) {
   useEffect(() => {
+    // listen for the request from colab notebook
     window.addEventListener("message", (event) => {
-      if (!event.origin.startsWith('https://') || !event.origin.endsWith('-colab.googleusercontent.com')) {
+      const {source, origin, data} = event
+      if (!origin.startsWith('https://') || !origin.endsWith('-colab.googleusercontent.com')) {
         return
       }
-      if (event.data.action === 'request') {
-        event.source?.postMessage({action: 'respond', value: 'foobarbaz'}, {targetOrigin: event.origin})
+      if (data.action === 'request') {
+        if (!source || !origin) throw new Error('No notebook!')
+        setNotebook({source, origin})
+        window.open('confirm', '_blank')
       }
     })
   })
