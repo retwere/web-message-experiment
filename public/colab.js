@@ -13,14 +13,12 @@ window.addEventListener(
 
 const iframe = document.createElement('iframe')
 iframe.setAttribute('src', ORIGIN)
-iframe.style.width = '0'
-iframe.style.height = '0'
-iframe.style.border = '0'
+iframe.style.display = 'none'
 document.body.appendChild(iframe)
 
 const button = document.createElement('button')
 button.onclick = () => {
-  iframe.contentWindow.postMessage({action: 'request'}, ORIGIN)
+  iframe.contentWindow.postMessage({action: 'request'}, {targetOrigin: ORIGIN})
 }
 button.textContent = 'Connect to Pinecone'
 document.body.appendChild(button)

@@ -9,4 +9,4 @@ def SetApiKey(val):
 
 def RenderButton():
   output.register_callback('pinecone.SetApiKey', SetApiKey)
-  display(Javascript(url='https://web-message-experiment.vercel.app/embed.js'))
+  display(Javascript(url='https://web-message-experiment.vercel.app/colab.js'))
