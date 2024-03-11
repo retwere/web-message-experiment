@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import ConfirmPage from './ConfirmPage'
 import MessageListener from './MessageListener'
 import { Auth0Provider } from '@auth0/auth0-react'
+import AuthenticationGuard from './AuthenticationGuard'
 
 function App() {
   return (
@@ -15,7 +16,9 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MessageListener />} />
-          <Route path="confirm" element={<ConfirmPage />} />
+          <Route element={<AuthenticationGuard />}>
+            <Route path="confirm" element={<ConfirmPage />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </Auth0Provider>
