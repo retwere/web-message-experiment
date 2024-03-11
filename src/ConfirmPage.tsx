@@ -2,7 +2,7 @@ import { useCallback } from "react"
 
 function ConfirmPage() {
   const onConfirm = useCallback(() => {
-    window.parent.postMessage(
+    window.opener.postMessage(
       {action: 'passthrough', value: 'foobarbaz'},
       {targetOrigin: 'https://web-message-experiment.vercel.app'}
     )
