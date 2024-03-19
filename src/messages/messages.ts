@@ -15,7 +15,7 @@ export const useListenForAck = () => {
 
   useEffect(() => {
     window.addEventListener("message", listenForAck)
-    return () => window.removeEventListener("message", listenForAck)
+    // return () => window.removeEventListener("message", listenForAck)
   }, [listenForAck])
 }
 
@@ -33,7 +33,7 @@ export const useListenForDone = (callback: () => void) => {
 
   useEffect(() => {
     window.addEventListener("message", listenForDone)
-    return () => window.removeEventListener("message", listenForDone)
+    // return () => window.removeEventListener("message", listenForDone)
   }, [listenForDone])
 }
 
