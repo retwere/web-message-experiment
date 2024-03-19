@@ -9,7 +9,7 @@ window.connectToPinecone = new Promise((resolve, reject) => {
     async (event) => {
       if (event.origin !== ORIGIN) return
       if (event.data.action === 'ready') {
-        iframe.contentWindow.postMessage({action: 'ack'}, {targetOrigin: ORIGIN})
+        iframe.postMessage({action: 'ack'}, {targetOrigin: ORIGIN})
       }
       if (event.data.action === 'cancel') {
         reject('Cancelled')
