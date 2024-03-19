@@ -6,7 +6,12 @@ import { useEffect } from 'react'
 
 function App() {
   useEffect(() => {
-    window.addEventListener("message", (event) => window.alert(event))
+    window.addEventListener("message", (event) => {
+      if (!origin.startsWith('https://') || !origin.endsWith('-colab.googleusercontent.com')) {
+        return
+      }
+      window.alert(JSON.stringify(event.data))
+    })
   }, [])
 
   return (
