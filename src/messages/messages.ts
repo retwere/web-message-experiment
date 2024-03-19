@@ -40,7 +40,7 @@ export const useListenForDone = (callback: () => void) => {
 export const useReadyMessage = () => {
   const {resetTargetOrigin} = useContext(MessageContext)
 
-  useEffect(() => resetTargetOrigin(), [resetTargetOrigin])
+  useEffect(() => resetTargetOrigin())
 
   useListenForAck()
 
