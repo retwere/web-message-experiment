@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import { useReadyMessage, useResizeMessage } from "./messages/messages"
 import { MessageContext } from "./messages/utils/context"
-import { useCallback, useContext, useEffect, useState } from "react"
+import { useCallback, useContext, useEffect } from "react"
 
 function ConnectButton() {
   const ready = useReadyMessage()
@@ -19,8 +19,7 @@ function ConnectButton() {
     navigate('confirm')
   }, [navigate])
 
-  const [disabled, setDisabled] = useState(true)
-  useEffect(() => setDisabled(targetOrigin === ''), [targetOrigin])
+  const disabled = targetOrigin === ''
 
   return <button onClick={onClick} disabled={disabled}>Connect to Pinecone</button>
 }
