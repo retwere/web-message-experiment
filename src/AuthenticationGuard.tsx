@@ -1,24 +1,23 @@
-import { useAuth0 } from "@auth0/auth0-react"
-import { Outlet, useSearchParams } from "react-router-dom"
+import { withAuthenticationRequired } from "@auth0/auth0-react"
+import { useContext } from "react"
+import { Outlet } from "react-router-dom"
+import { useResizeMessage } from "./messages/messages"
+import { MessageContext } from "./messages/utils/context"
 
 function AuthenticationGuard() {
-  const {loginWithRedirect, isAuthenticated, isLoading} = useAuth0();
-  const [searchParams] = useSearchParams()
+  const resize = useResizeMessage()
+  const {targetOrigin} = useContext(MessageContext)
 
-  if (isLoading) {
-    return <div>Loading...</div>
-  }
-
-  if (!isAuthenticated) {
-    const errorType = searchParams.get('error')
-    if (errorType) {
-      const errorMessage = searchParams.get('error_description')
-      return <div>Authentication Error: {errorType}: {errorMessage || ''}</div>
+  const Component = withAuthenticationRequired(Outlet, {
+    onBeforeAuthentication: async () => resize({width: '400px', height: '650px'}),
+    onRedirecting: () => <div>Loading...</div>,
+    loginOptions: {
+      appState: {
+        origin: targetOrigin
+      }
     }
-    loginWithRedirect()
-    return <div>Loading...</div>
-  }
-  return <Outlet />
+  })
+  return <Component />
 }
 
 export default AuthenticationGuard

@@ -1,15 +1,16 @@
-import { useCallback } from "react"
+import { useCallback, useEffect } from "react"
+import { useApiKeyMessage, useCancelMessage, useResizeMessage } from "./messages/messages"
+import { useNavigate } from "react-router-dom"
 
 function ConfirmPage() {
-  const onConfirm = useCallback(() => {
-    window.opener.postMessage(
-      {action: 'passthrough', value: 'foobarbaz'},
-      {targetOrigin: 'https://web-message-experiment.vercel.app'}
-    )
-    window.close()
-  }, [])
+  const resize = useResizeMessage()
+  useEffect(() => resize({width: '400px', height: '400px'}), [resize])
 
-  const onCancel = useCallback(() => {window.close()}, [])
+  const navigate = useNavigate()
+  const sendKey = useApiKeyMessage(() => navigate('done'))
+
+  const onConfirm = useCallback(() => sendKey('foobarbaz'), [sendKey])
+  const onCancel = useCancelMessage()
 
   return <div>
     <h1>Confirm connection</h1>
